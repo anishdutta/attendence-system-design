@@ -20,6 +20,9 @@ npm install sqlite3 --build-from-source --target_arch=arm64 --fallback-to-build
 
 ## Usage
 
+For more detailed documentation and examples, refer to the [Postman Documentation](https://documenter.getpostman.com/view/12517036/2sA2r9UhVf).
+
+
 ### Check-In/Out API
 
 - The API accepts separate calls for check-in and check-out operations.
@@ -33,7 +36,7 @@ npm install sqlite3 --build-from-source --target_arch=arm64 --fallback-to-build
 ```json
 {
   "instructorId": "uniqueID",
-  "type":"check-in" / "check-out" 
+  "type":"check-in | check-out"
 }
 ```
 
@@ -50,6 +53,18 @@ Unit tests are implemented to ensure the system works as expected in various sce
 ```
 npm test
 ```
+## Sequelize ORM
+
+The system utilizes Sequelize, an Object-Relational Mapping (ORM) library for Node.js, to interact with the SQL database. Sequelize simplifies database operations by mapping database objects to JavaScript objects, making it easier to perform CRUD (Create, Read, Update, Delete) operations and manage relationships between different tables.
+
+## Session-Based Approach
+
+The system adopts a session-based approach to manage user authentication and authorization. When an instructor logs in, a session is created and stored, allowing the system to identify and authenticate the user for subsequent requests during the session. This approach ensures that only authenticated users can access and perform authorized actions within the system.
+
+## Transaction Usage for Database Integrity
+
+Transactions are utilized to maintain database integrity during operations that involve multiple database changes. When an instructor checks in or checks out, the system begins a transaction to ensure that all database changes related to the operation are completed successfully. If any part of the operation fails, the transaction is rolled back, reverting all changes made within the transaction to maintain database consistency. This ensures that the database remains in a consistent state even in the event of errors or failures during operations.
+
 
 ## Dependencies
 - Express.js
