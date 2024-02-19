@@ -79,7 +79,10 @@ describe("attendance tests", () => {
     expect(await res).toStrictEqual([
       {
         checkOutTime: expect.any(Date),
-        status: "CLOSED",
+        checkInDate: expect.any(Date),
+             "id": 1,
+             "instructorId": 89765,        
+             status: "CLOSED",
         totalWorkingHours: NaN,
       },
     ]);
