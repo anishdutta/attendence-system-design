@@ -54,10 +54,10 @@ export class AttendenceService {
     let response:ISession | ISession[];
     switch (request.type) {
       case ICheckInOutType.CHECK_IN:
-        response =  await this.handleCheckInRequest(request,t);
+        response =  await this.handleCheckInRequest(request);
         break;
       case ICheckInOutType.CHECK_OUT:
-        response =  await this.handleCheckOutRequest(request,t);
+        response =  await this.handleCheckOutRequest(request);
         break;
       default:
         throw new Error("There are no open sessions at this moment");
@@ -72,16 +72,14 @@ export class AttendenceService {
    */
 
   private async handleCheckInRequest(
-    request: ICheckInOrOutRequest,
-    transaction: Transaction
+    request: ICheckInOrOutRequest
   ): Promise<ISession> {
     const todayAt0Hours = new Date();
     todayAt0Hours.setHours(0);
     const openSessions = await this.sessions.getSessionsByInstructorId(
       request.instructorId,
       ISessionStatus.OPEN,
-      todayAt0Hours,
-      transaction
+      todayAt0Hours
     );
     console.log(openSessions);
     if (openSessions && openSessions.length > 0) {
@@ -91,21 +89,19 @@ export class AttendenceService {
       checkInTime: new Date(),
       instructorId: request.instructorId,
       status: ISessionStatus.OPEN,
-    },transaction);
+    });
     return session;
   };
 
   private async handleCheckOutRequest(
     request: ICheckInOrOutRequest,
-    transaction: Transaction
   ): Promise<ISession[]> {
     const todayAt0Hours = new Date();
     todayAt0Hours.setHours(0);
     const openSessions = await this.sessions.getSessionsByInstructorId(
       request.instructorId,
       ISessionStatus.OPEN,
-      todayAt0Hours,
-      transaction
+      todayAt0Hours
     );
     if (!openSessions || openSessions.length === 0) {
       throw new Error("There are no open sessions at this moment");
@@ -115,7 +111,7 @@ export class AttendenceService {
       ids: openSessions.map((session) => session.id),
       status: ISessionStatus.CLOSED,
       checkOutTime: checkOutTime,
-    },transaction);
+    });
     return this.constructCheckOutSessions(openSessions.map(session=>session['dataValues']),checkOutTime);
   };
 
