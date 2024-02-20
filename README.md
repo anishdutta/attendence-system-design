@@ -29,7 +29,6 @@ For more detailed documentation and examples, refer to the [Postman Documentatio
 - Instructors must provide their unique ID along with the check-in/out time.
 - The system validates the input to ensure the date and timings are valid, and slots do not overlap.
 
-#### Check-In
 **Endpoint:** `POST /v1/attendance/checkInAndOut`
 
 **Request Body:**
@@ -40,7 +39,7 @@ For more detailed documentation and examples, refer to the [Postman Documentatio
 }
 ```
 
-#### Check-In
+#### getMonthlyAnalytics
 
 - This API computes and returns the total checked-in time for each instructor in a given month.
 - The report is provided in JSON format.
